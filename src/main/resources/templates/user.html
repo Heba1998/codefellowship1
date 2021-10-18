@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<div th:fragment="profile(userToProfile)">
+    <h1 th:text="${userToProfile.username}"></h1>
+    <img src="https://cdn.geekwire.com/wp-content/uploads/2017/04/codefellows.jpg" alt="">
+    <h3> Full Name: <span th:text="${userToProfile.firstName}"> </span>
+        <span th:text="${userToProfile.lastName}"></span></h3>
+    <h4> Birth Date: <span th:text="${userToProfile.dateOfBirth}"></span></h4>
+    <h4> About me: <span th:text="${userToProfile.bio}"></span></h4>
+
+    <div th:if="${userToProfile.posts != null && userToProfile.posts.size() > 0}">
+        <h4>Posts:</h4>
+        <ul>
+            <li th:each="post :${userToProfile.posts}" th:text="${post.body} + ' => at: ' + ${post.createdAt}">
+        </ul>
+    </div>
+</div>
+</html>
