@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign up</title>
+</head>
+<body>
+<div th:replace="nav :: nav"></div>
+<div class="container">
+    <h1>Fill this form to sign up</h1>
+    <form method="POST" action="/users">
+        <div>
+            <label for="username">Username:</label>
+            <input id="username" name="username">
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input id="password" name="password" type="password">
+        </div>
+        <div>
+            <label for="firstName">First Name</label>
+            <input id="firstName" name="firstName">
+        </div>
+        <div>
+            <label for="lastName">Last Name</label>
+            <input id="lastName" name="lastName">
+        </div>
+        <div>
+            <label for="dateOfBirth">Birth Date:</label>
+            <input id="dateOfBirth" name="dateOfBirth" type="date">
+        </div>
+        <div>
+            <label for="bio">Bio</label>
+            <input id="bio" name="bio">
+        </div>
+        <div>
+            <input type="submit" value="Sign up">
+        </div>
+    </form>
+</div>
+</body>
+</html>
