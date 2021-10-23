@@ -5,6 +5,7 @@ import com.lab.codefellowship1.repository.ApplicationUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -12,11 +13,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class ApplicationUserController {
@@ -62,5 +65,24 @@ public class ApplicationUserController {
         model.addAttribute("allUsers", applicationUserRepository.findAll());
         return "users";
     }
+
+
+    @GetMapping("/feed")
+    public String getUsersInfo(@AuthenticationPrincipal ApplicationUser user, Model model) {
+        model.addAttribute("username", user.getUsername());
+        ApplicationUser feed = applicationUserRepository.findByUsername(user.getUsername());
+        List<ApplicationUser> myfollowers = feed.getFollowers();
+        model.addAttribute("allfollowers", myfollowers);
+        return "feed";
+    }
+    @PostMapping("/follow")
+    public RedirectView followUser(@AuthenticationPrincipal ApplicationUser user, @RequestParam Long id) {
+        ApplicationUser feed = applicationUserRepository.findByUsername(user.getUsername());
+        ApplicationUser follow = applicationUserRepository.findById(id).get();
+        feed.getFollowers().add(follow);
+        applicationUserRepository.save(feed);
+        return new RedirectView("/feed");
+    }
+
 
 }

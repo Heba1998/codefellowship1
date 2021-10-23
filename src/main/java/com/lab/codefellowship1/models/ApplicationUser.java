@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -125,4 +126,26 @@ public class ApplicationUser implements UserDetails {
         return true;
     }
 
+    @ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(name = "follower_follower", joinColumns = @JoinColumn(name = "from_id"), inverseJoinColumns = @JoinColumn(name = "to_id"))
+    List<ApplicationUser> followers = new ArrayList<>();
+    @ManyToMany(mappedBy = "followers")
+    List<ApplicationUser> following = new ArrayList<>();
+
+    public List<ApplicationUser> getFollowers() {
+        return followers;
+    }
+
+    public List<ApplicationUser> getFollowing() {
+        return following;
+    }
+
+    public void setFollowers(List<ApplicationUser> followers) {
+        this.followers = followers;
+    }
+
+
+    public void setFollowing(List<ApplicationUser> following) {
+        this.following = following;
+    }
 }

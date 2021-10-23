@@ -10,6 +10,10 @@
     <div th:replace="user :: profile(userToProfile=${viewedUser})"></div>
     <div th:include="post :: post" th:if="${viewedUser.username == user.name}"></div>
 </div>
-
+<div>
+    <form method="post" th:action="'/follow/' + ${viewedUser.id}" th:if="${viewedUser.username != user.name}">
+        <button type="submit" class="btn btn-primary">Follow</button>
+    </form>
+</div>
 </body>
 </html>
