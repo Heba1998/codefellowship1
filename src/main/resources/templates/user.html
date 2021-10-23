@@ -15,5 +15,6 @@
             <li th:each="post :${userToProfile.posts}" th:text="${post.body} + ' => at: ' + ${post.createdAt}">
         </ul>
     </div>
+
 </div>
 </html>
